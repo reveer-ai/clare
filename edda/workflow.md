@@ -20,12 +20,17 @@ Stay on the latest OpenSpec release. The repo was set up with 2.1.0, installed g
 | Design | Owner approves |
 | Specs, tasks | No separate approval |
 | Start of implementation | Owner initiates; never start on your own |
+| Archive | Automatic once the owner approves the PR: archive the change in the same PR, before merge |
+
+Work written before OpenSpec covered it gets a retroactive change that records what was done (CLA-1 is the first).
 
 ## Branches and PRs
 
 - Branch name: the issue's `gitBranchName` from Linear (e.g. `cla-1-initialize-clare`).
 - PR title: `<issue id>: <description>` (e.g. `CLA-1: Initialize clare`).
-- PRs go to `main` on `github.com/reveer-ai/clare`.
+- PRs go to `main` on `github.com/reveer-ai/clare` and are always squash-merged.
+- After the owner approves a PR, run `openspec archive <change>` on the PR branch, commit and push, then merge. Never merge with the change still under `openspec/changes/`.
+- History: `main` is meant to start with CLA-1's squashed commit. To get there, `main` was reset to one empty commit before CLA-1 merged, and that root gets folded into the squash after the merge.
 
 ## Where the roadmap lives
 
