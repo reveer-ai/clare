@@ -30,7 +30,7 @@ Work written before OpenSpec covered it gets a retroactive change that records w
 - PR title: `<issue id>: <description>` (e.g. `CLA-1: Initialize clare`).
 - PRs go to `main` on `github.com/reveer-ai/clare` and are always squash-merged.
 - After the owner approves a PR, run `openspec archive <change>` on the PR branch, commit and push, then merge. Never merge with the change still under `openspec/changes/`.
-- History: `main` is meant to start with CLA-1's squashed commit. To get there, `main` was reset to one empty commit before CLA-1 merged, and that root gets folded into the squash after the merge.
+- History: `main` starts with CLA-1's squashed commit. That was done once, at setup, by rewriting `main` (the original LICENSE-only commit went away). Don't force-push `main` again unless the owner asks for it. Note that a force-push that replaces a PR's base history closes the PR on GitHub, and it can't be reopened.
 
 ## Where the roadmap lives
 
