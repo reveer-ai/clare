@@ -12,13 +12,7 @@ Most explanations arrive as walls of text, and AI has made that worse. People ta
 
 You give Clare a subject: an idea, a change, a system, a codebase. Clare decides what the reader needs to understand and what form shows it best, then generates that form.
 
-| Subject shape | Form |
-|---|---|
-| A process | Diagram or step-through |
-| A system | Interactive map |
-| A comparison | Table or side-by-side view |
-| Facts to remember | Flashcards or quiz |
-| An argument | A few slides |
+**The agent decides the form.** This is a core tenet. Clare relies on the coding assistant's own judgment about each subject. It does not route subjects to formats by rule. The owner's examples of how that judgment might come out (a process as a step-through, a system as an interactive map, a comparison as a side-by-side view, facts to remember as flashcards, an argument as a few slides) are illustrations only. Neither the skills nor this record should turn them into a lookup table.
 
 ## Principles
 
@@ -27,6 +21,8 @@ You give Clare a subject: an idea, a change, a system, a codebase. Clare decides
 3. **Use as few words as possible.** Every sentence has to earn its place.
 4. **Get the important part in first.** A reader who stops early still leaves with the main point.
 5. **Stay true to the source.** Each view names what it explains, so it can be checked and kept current.
+
+These are the owner's intent for how Clare behaves. Clare's skills will turn them into working guidance for the agent. Once a skill does, that skill holds the operative wording and changes are made there. This section stays as the intent the skill is checked against, and it is not copied into or kept in sync with the skill text.
 
 ## What it ships as
 
