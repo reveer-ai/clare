@@ -99,3 +99,21 @@ test('compareVersions orders numerically', () => {
   assert.ok(compareVersions('0.2.5', '0.3.0') < 0);
   assert.equal(compareVersions('1.2.3', '1.2.3'), 0);
 });
+
+test('compareVersions ranks a release above its pre-releases', () => {
+  assert.ok(compareVersions('0.1.0', '0.0.0-stage') > 0);
+  assert.ok(compareVersions('1.0.0', '1.0.0-beta.1') > 0);
+  assert.ok(compareVersions('0.9.0', '1.0.0-beta.1') < 0);
+});
+
+test("npm's placeholder latest (0.0.0-stage) doesn't block the first release", () => {
+  const f = fake({ npm: { versions: ['0.0.0-stage'], latest: '0.0.0-stage' } });
+  go(f, '0.1.0');
+  assert.deepEqual(f.did('npm publish'), ['npm publish --provenance']);
+});
+
+test('a latest that isn\'t semver fails the run instead of crashing', () => {
+  const f = fake({ npm: { versions: ['weird'], latest: 'weird' } });
+  assert.throws(() => go(f, '0.1.0'), /isn't semver/);
+  assert.deepEqual(f.did('npm publish'), []);
+});

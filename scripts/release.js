@@ -11,12 +11,24 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const PLAIN_SEMVER = /^(\d+)\.(\d+)\.(\d+)$/;
+const ANY_SEMVER = /^(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?(?:\+[0-9A-Za-z.-]+)?$/;
 
+function parseVersion(v) {
+  const m = String(v).match(ANY_SEMVER);
+  if (!m) throw new Error(`can't compare against version "${v}": it isn't semver`);
+  return { core: m.slice(1, 4).map(Number), pre: m[4] };
+}
+
+// Ours is always plain major.minor.patch, but npm's latest may carry a
+// pre-release suffix (npm shows a 0.0.0-stage placeholder for a package
+// that is still being created). Per semver, 1.0.0 is higher than 1.0.0-x.
 export function compareVersions(a, b) {
-  const pa = a.match(PLAIN_SEMVER).slice(1).map(Number);
-  const pb = b.match(PLAIN_SEMVER).slice(1).map(Number);
-  for (let i = 0; i < 3; i++) if (pa[i] !== pb[i]) return pa[i] - pb[i];
-  return 0;
+  const pa = parseVersion(a);
+  const pb = parseVersion(b);
+  for (let i = 0; i < 3; i++) if (pa.core[i] !== pb.core[i]) return pa.core[i] - pb.core[i];
+  if (pa.pre && !pb.pre) return -1;
+  if (!pa.pre && pb.pre) return 1;
+  return (pa.pre ?? '').localeCompare(pb.pre ?? '');
 }
 
 function describe(result) {
