@@ -9,7 +9,7 @@ rules:
   proposal:
     - Name the Linear issue it implements (e.g. CLA-2).
     - The owner approves the proposal before anything else is built on it.
-    - Once it's written, push the branch and open the PR (title `<issue id>: <description>`). Then stop. Don't draft the design in the same pass.
+    - "Once it's written, push the branch and open the PR (title `<issue id>: <description>`). Then stop. Don't draft the design in the same pass."
     - Push every later refinement to the change as soon as it's written.
   design:
     - Write the design only after the owner has approved the proposal and you are aligned on it.
