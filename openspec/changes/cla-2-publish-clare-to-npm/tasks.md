@@ -15,7 +15,7 @@
 
 ## 3. Release workflow
 
-- [ ] 3.1 Add `.github/workflows/release.yml` with the `test` job (PRs and pushes to `main`: Node 24, `npm test`, `npm pack --dry-run`) and verify it passes on this PR
+- [x] 3.1 Add `.github/workflows/release.yml` with the `test` job (PRs and pushes to `main`: Node 24, `npm test`, `npm pack --dry-run`) and verify it passes on this PR
 - [x] 3.2 Add the `release` job (push to `main` only, `id-token: write`, `contents: write`, `concurrency: release`, npm updated to latest; publish if missing and not lower than `latest`, then tag and release if missing) and verify its decision logic by running it locally with stubbed npm results for the bumped, unchanged, lower-version and tag-missing cases from `specs/release`
 - [x] 3.3 Verify with `gh secret list` that the repo has no npm token secret
 
