@@ -1,21 +1,26 @@
 schema: spec-driven
 
 context: |
-  Clare ships as an npm package of skills that any coding assistant can use.
-  Nothing Clare ships may depend on one assistant (Claude, Codex, Cursor, ...).
+  clare ships as an npm package of skills that any coding assistant can use.
+  Nothing clare ships may depend on one assistant (Claude, Codex, Cursor, ...).
   Every change maps to one Linear issue (team CLA); name the change after it.
 
 rules:
   proposal:
     - Name the Linear issue it implements (e.g. CLA-2).
     - The owner approves the proposal before anything else is built on it.
+    - "Once it's written, push the branch and open the PR (title `<issue id>: <description>`). Then stop. Don't draft the design in the same pass."
+    - Push every later refinement to the change as soon as it's written.
   design:
+    - Write the design only after the owner has approved the proposal and you are aligned on it.
+    - Once both exist, keep them in step and update both together as the change is refined.
     - The owner approves the design. Specs and tasks need no separate approval.
 
 operations:
   apply:
     guidance:
       - Never start implementation on your own. The owner initiates it.
+      - Push code to the change's PR as each piece is finished.
   archive:
     guidance:
       - Archive as soon as the owner approves the PR, in the same PR, before it is merged.
