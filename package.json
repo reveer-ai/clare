@@ -1,7 +1,7 @@
 {
-  "name": "clareai",
+  "name": "clare-ai",
   "version": "0.1.0",
-  "description": "Skills that help any coding assistant explain a subject in the form that gets it across fastest. Run with npx clareai init.",
+  "description": "Skills that help any coding assistant explain a subject in the form that gets it across fastest. Run with npx clare-ai init.",
   "type": "module",
   "bin": {
     "clare": "bin/clare.js"

@@ -6,14 +6,14 @@ Puts clare's skills into a project so the coding assistants working in it can us
 ## Requirements
 
 ### Requirement: Command name and invocation
-The package `clareai` SHALL provide a command named `clare`, runnable without a global install through `npx clareai <command>`.
+The package `clare-ai` SHALL provide a command named `clare`, runnable without a global install through `npx clare-ai <command>`.
 
 #### Scenario: Run through npx
-- **WHEN** a user runs `npx clareai init` in a project
+- **WHEN** a user runs `npx clare-ai init` in a project
 - **THEN** clare's `init` command runs in that project
 
 #### Scenario: Run when installed
-- **WHEN** `clareai` is installed and a user runs `clare init`
+- **WHEN** `clare-ai` is installed and a user runs `clare init`
 - **THEN** clare's `init` command runs in the current directory
 
 ### Requirement: Help, version and unknown commands

@@ -11,10 +11,10 @@ It ships as a set of skills that any coding assistant can use.
 In your project:
 
 ```sh
-npx clareai init
+npx clare-ai init
 ```
 
-Note the package name: it's **`clareai`**. The `clare` package on npm is unrelated, so `npx clare init` won't run this.
+Note the package name: it's **`clare-ai`**. The `clare` package on npm is unrelated, so `npx clare init` won't run this.
 
 `init` copies clare's skills into `.agents/skills/`, the folder that Codex, Copilot, Cursor, Gemini CLI and others read. It changes only clare's own folders there.
 
@@ -23,7 +23,7 @@ Claude Code reads only `.claude/skills/`. If your project has a `.claude/` folde
 To update, run the latest version:
 
 ```sh
-npx clareai@latest init
+npx clare-ai@latest init
 ```
 
 This replaces clare's skill folders, including any edits you made to them.

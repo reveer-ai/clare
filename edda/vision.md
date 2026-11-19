@@ -2,7 +2,7 @@
 
 Stated by the project owner on 2026-11-17. This is the product definition; work should trace back to it.
 
-The name is always written lowercase, **clare**, even at the start of a sentence and in skill metadata (owner, 2026-11-18). The npm package is `clareai`.
+The name is always written lowercase, **clare**, even at the start of a sentence and in skill metadata (owner, 2026-11-18). The npm package is `clare-ai`.
 
 clare explains a subject in whatever form gets it across fastest: an interactive page, a few slides, a diagram, an image, a set of flashcards. Paragraphs are a last resort.
 
@@ -30,7 +30,7 @@ These are the owner's intent for how clare behaves. clare's skills will turn the
 
 An **npm package containing a set of skills** that coding assistants pick up and use. It is assistant-agnostic: it must work with most coding assistants, not only Claude. Nothing in it may depend on one vendor's tools or formats. (Decided 2026-11-17; a Claude Code plugin was considered and rejected for this reason.)
 
-The package is `clareai`, because the npm name `clare` belongs to an unrelated package. Its command is `clare`. A project installs clare with `npx clareai init`, which copies clare's skills into `.agents/skills/`, the shared location that Codex, Copilot, Cursor, Gemini CLI and others read. It touches only clare's own folders there. Running it again (`npx clareai@latest init`) is how a project updates.
+The package is `clare-ai`, because the npm name `clare` belongs to an unrelated package. Its command is `clare`. A project installs clare with `npx clare-ai init`, which copies clare's skills into `.agents/skills/`, the shared location that Codex, Copilot, Cursor, Gemini CLI and others read. It touches only clare's own folders there. Running it again (`npx clare-ai@latest init`) is how a project updates.
 
 Claude Code reads only `.claude/skills/`, never `.agents/skills/`. So when a project has a `.claude/` folder, `init` also links `.claude/skills/<skill>` to the `.agents/skills/` copy: one copy, which Claude Code finds too. That link is the package's only assistant-specific path, and nothing depends on it. (Decided 2026-11-18, CLA-2. Copying into `.claude/skills/` was rejected because two copies drift apart.)
 

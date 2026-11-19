@@ -35,7 +35,7 @@ See proposal.md for motivation.
 
 ## Decisions
 
-**Package `clareai`, command `clare`.** In `package.json`, `bin` maps `clare` to `bin/clare.js`. Because the package has one bin, `npx clareai init` runs it without a global install. *Alternative:* a scoped name such as `@reveer/clare`. Rejected because the owner chose `clareai`.
+**Package `clare-ai`, command `clare`.** In `package.json`, `bin` maps `clare` to `bin/clare.js`. Because the package has one bin, `npx clare-ai init` runs it without a global install. *Alternative:* a scoped name such as `@reveer/clare`. Rejected because the owner chose `clare-ai`.
 
 **Plain JavaScript, Node built-ins only.** ESM, no dependencies, no build step, and `engines.node >= 22` for users (the oldest Node LTS still supported). Tests use `node --test`. A small CLI doesn't need a framework, and having no dependencies keeps installs fast and the supply chain empty.
 
@@ -43,7 +43,7 @@ See proposal.md for motivation.
 
 **CLI surface.** The commands are `clare init`, `clare --help` and `clare --version`. Running with no command or an unknown one prints usage and exits 1. `init` acts on the current working directory. *Alternative:* look for the git root. Rejected because it guesses, while the current directory is predictable and matches how other `init` commands work.
 
-**`init` owns only its own skill folders.** For each skill in the package, it replaces `.agents/skills/<name>/` with the packaged copy and creates `.agents/skills/` if needed. Anything else in that directory (for example OpenSpec's skills or `.openspec-target`) is never read or changed. Replacing the folder outright means a rerun leaves exactly the packaged version, so updating is `npx clareai@latest init`. It then prints each path it wrote.
+**`init` owns only its own skill folders.** For each skill in the package, it replaces `.agents/skills/<name>/` with the packaged copy and creates `.agents/skills/` if needed. Anything else in that directory (for example OpenSpec's skills or `.openspec-target`) is never read or changed. Replacing the folder outright means a rerun leaves exactly the packaged version, so updating is `npx clare-ai@latest init`. It then prints each path it wrote.
 
 **Claude Code link.** Only when `<project>/.claude/` already exists, `init` creates `.claude/skills/` if needed and makes `.claude/skills/<name>` a relative symlink to `../../.agents/skills/<name>`. A relative link keeps working when the project is moved, cloned or committed. On Windows it makes a directory junction, which doesn't need admin rights. If something that isn't a symlink is already at that path, `init` leaves it alone and warns, because it isn't clare's. An existing symlink gets replaced. *Alternatives:* create `.claude/` in every project, rejected because it adds a vendor folder to projects that don't use Claude Code. Copying instead of linking, rejected by the owner because two copies drift apart. This is the package's only assistant-specific path. It is a link, not a second copy, so CLA-1's choice against per-assistant copies still holds.
 
@@ -60,7 +60,7 @@ TBD.
 
 The description says plainly that it does nothing, so no assistant picks it for real work.
 
-**Metadata.** License MIT, `repository.url` set to `git+https://github.com/reveer-ai/clare.git` (trusted publishing needs it), and a short description. A minimal `README.md` covers what clare is and how to run `npx clareai init`, because npm shows it on the package page.
+**Metadata.** License MIT, `repository.url` set to `git+https://github.com/reveer-ai/clare.git` (trusted publishing needs it), and a short description. A minimal `README.md` covers what clare is and how to run `npx clare-ai init`, because npm shows it on the package page.
 
 **Versioning: `package.json` is the source of truth, and git tags follow it.** A PR that should ship bumps `version` itself, following semver while clare is on `0.x`: a minor bump for new behavior and a patch bump for fixes. Each released version gets a `v<version>` tag on the `main` commit that released it, plus a GitHub release with generated notes. CI never commits to `main`. *Alternatives:* CI bumps a patch version on every push and commits it back, rejected by the owner. Changesets, rejected because it adds a dependency and an extra PR for each release.
 
@@ -78,10 +78,10 @@ Each step checks before it acts, so rerunning a failed run finishes whatever is 
 
 **First release order.** This sequence fits npm's rule that the package must exist first and the 2-day window, and it puts the first real release through the workflow:
 
-1. After the PR is approved and archived, but before merge, the owner publishes **`0.0.1`** by hand from the PR branch (`npm login`, then `npm publish` with `version` set to `0.0.1` locally, not committed). That creates the `clareai` name.
-2. The owner sets up the trusted publisher with direct publish allowed, on npmjs.com or with `npm trust github clareai --file release.yml --repo reveer-ai/clare --allow-publish`. Optionally, they also turn on "require 2FA and disallow tokens" for the package.
+1. After the PR is approved and archived, but before merge, the owner publishes **`0.0.1`** by hand from the PR branch (`npm login`, then `npm publish` with `version` set to `0.0.1` locally, not committed). That creates the `clare-ai` name.
+2. The owner sets up the trusted publisher with direct publish allowed, on npmjs.com or with `npx npm@latest trust github clare-ai --file release.yml --repo reveer-ai/clare --allow-publish` (`--allow-publish` needs npm 12 or later). Optionally, they also turn on "require 2FA and disallow tokens" for the package.
 3. Squash-merge. The workflow publishes **`0.1.0`** through trusted publishing within the 2-day window, tags `v0.1.0` and creates its release. That proves the whole path in CLA-2.
-4. The owner deprecates `0.0.1` (`npm deprecate clareai@0.0.1 "bootstrap release, use 0.1.0+"`).
+4. The owner deprecates `0.0.1` (`npm deprecate clare-ai@0.0.1 "bootstrap release, use 0.1.0+"`).
 
 *Alternative:* publish `0.1.0` by hand and let CI take over from the next bump. Rejected because the trusted publisher setup would probably expire before that next release, and the workflow's publish path would go untested.
 
@@ -89,7 +89,7 @@ Each step checks before it acts, so rerunning a failed run finishes whatever is 
 
 ## Risks / Trade-offs
 
-- [Someone runs `npx clare init` and gets the unrelated `clare` package] → The README and the package description use `npx clareai init`.
+- [Someone runs `npx clare init` and gets the unrelated `clare` package] → The README and the package description use `npx clare-ai init`.
 - [A rerun overwrites local edits to clare's skill folders] → Accepted, since those folders are clare's generated content. `init` lists what it replaced.
 - [A later version drops a skill and the old folder stays behind] → Accepted while there is one skill. Revisit when skills are added or removed, possibly with a manifest.
 - [The link isn't created: `.claude/` gets added after `init`, a Windows junction fails, or git stores a junction as a plain folder] → `init` warns and still installs to `.agents/skills/`. Running `init` again after adding `.claude/` creates the link.
@@ -101,4 +101,4 @@ Each step checks before it acts, so rerunning a failed run finishes whatever is 
 
 ## Migration Plan
 
-There's nothing to migrate. The release order is in **First release order** above. CLA-2 is Done once `npx clareai@0.1.0 init` works in a scratch project and `v0.1.0` exists as a tag and a GitHub release.
+There's nothing to migrate. The release order is in **First release order** above. CLA-2 is Done once `npx clare-ai@0.1.0 init` works in a scratch project and `v0.1.0` exists as a tag and a GitHub release.

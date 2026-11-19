@@ -19,7 +19,7 @@ On every push to `main`, if the `package.json` version is not on npm, the releas
 #### Scenario: Version bumped
 - **GIVEN** `package.json` on `main` has version `0.2.0` and npm's latest is `0.1.0`
 - **WHEN** that commit is pushed to `main`
-- **THEN** `clareai@0.2.0` is published with a provenance attestation and becomes `latest`
+- **THEN** `clare-ai@0.2.0` is published with a provenance attestation and becomes `latest`
 
 #### Scenario: Tests fail
 - **GIVEN** the version is not on npm and the tests fail

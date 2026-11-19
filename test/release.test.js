@@ -29,7 +29,7 @@ function fake({ npm = null, tags = [], releases = [], fail = {} } = {}) {
   return { run, calls, did: (prefix) => calls.filter((c) => c.startsWith(prefix)) };
 }
 
-const go = (f, version) => release({ name: 'clareai', version, sha: SHA, run: f.run, log: () => {} });
+const go = (f, version) => release({ name: 'clare-ai', version, sha: SHA, run: f.run, log: () => {} });
 
 test('version bumped: publishes, tags the commit and creates the release', () => {
   const f = fake({ npm: { versions: ['0.0.1', '0.1.0'], latest: '0.1.0' }, tags: ['v0.1.0'], releases: ['v0.1.0'] });
@@ -85,8 +85,8 @@ test('a failed publish stops before tagging', () => {
 });
 
 test('an npm error other than 404 fails the run', () => {
-  const f = fake({ fail: { 'npm view clareai versions dist-tags --json': 'ETIMEDOUT' } });
-  assert.throws(() => go(f, '0.2.0'), /npm view clareai failed/);
+  const f = fake({ fail: { 'npm view clare-ai versions dist-tags --json': 'ETIMEDOUT' } });
+  assert.throws(() => go(f, '0.2.0'), /npm view clare-ai failed/);
   assert.deepEqual(f.did('npm publish'), []);
 });
 
