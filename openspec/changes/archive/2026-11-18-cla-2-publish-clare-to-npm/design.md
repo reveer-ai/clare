@@ -83,6 +83,8 @@ Each step checks before it acts, so rerunning a failed run finishes whatever is 
 3. Squash-merge. The workflow publishes **`0.1.0`** through trusted publishing within the 2-day window, tags `v0.1.0` and creates its release. That proves the whole path in CLA-2.
 4. The owner deprecates `0.0.1` (`npm deprecate clare-ai@0.0.1 "bootstrap release, use 0.1.0+"`).
 
+*What happened (2026-11-19):* the package was first bootstrapped as `clareai`, an earlier name. The owner corrected it to `clare-ai` before merge, unpublished `clareai` entirely, and bootstrapped `clare-ai@0.0.1` instead. Two things showed up along the way. npm 11's `npm trust` has no `--allow-publish` flag, so the setup ran through npm 12. And while npm processes a new package, it lists a `0.0.0-stage` placeholder as `latest`, so `scripts/release.js` treats a pre-release `latest` as lower than any release of the same version or above.
+
 *Alternative:* publish `0.1.0` by hand and let CI take over from the next bump. Rejected because the trusted publisher setup would probably expire before that next release, and the workflow's publish path would go untested.
 
 **OpenSpec stays global, not pinned.** CLA-1 left pinning to be revisited here. Pinning it as a dev dependency would give a second source for the version, while `edda/workflow.md` already says to stay on the latest. Keep it global. CI doesn't run OpenSpec.
