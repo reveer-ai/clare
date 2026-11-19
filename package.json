@@ -1,0 +1,26 @@
+{
+  "name": "clareai",
+  "version": "0.1.0",
+  "description": "Skills that help any coding assistant explain a subject in the form that gets it across fastest. Run with npx clareai init.",
+  "type": "module",
+  "bin": {
+    "clare": "bin/clare.js"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reveer-ai/clare.git"
+  },
+  "homepage": "https://github.com/reveer-ai/clare#readme",
+  "license": "MIT"
+}

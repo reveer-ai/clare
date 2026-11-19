@@ -16,8 +16,8 @@ Stay on the latest OpenSpec release. The repo was set up with 2.1.0, installed g
 
 | Step | Who |
 |---|---|
-| Proposal | Owner approves |
-| Design | Owner approves |
+| Proposal | Owner approves. Stop after writing it and opening the PR |
+| Design | Owner approves. Write it only once the proposal is approved and you and the owner are aligned on it. After both exist, update them together as the change is refined |
 | Specs, tasks | No separate approval |
 | Start of implementation | Owner initiates; never start on your own |
 | Archive | Automatic once the owner approves the PR: archive the change in the same PR, before merge |
@@ -29,8 +29,19 @@ Work written before OpenSpec covered it gets a retroactive change that records w
 - Branch name: the issue's `gitBranchName` from Linear (e.g. `cla-1-initialize-clare`).
 - PR title: `<issue id>: <description>` (e.g. `CLA-1: Initialize clare`).
 - PRs go to `main` on `github.com/reveer-ai/clare` and are always squash-merged.
+- Open the PR as soon as the proposal is written, so the whole change is reviewed there from the start (owner, 2026-11-18). From then on, push as work becomes ready: each OpenSpec refinement (design, specs, tasks, later edits) as soon as it's written, and code as each piece is finished. Don't hold finished work locally.
 - After the owner approves a PR, run `openspec archive <change>` on the PR branch, commit and push, then merge. Never merge with the change still under `openspec/changes/`.
 - History: `main` starts with CLA-1's squashed commit. That was done once, at setup, by rewriting `main` (the original LICENSE-only commit went away). Don't force-push `main` again unless the owner asks for it. Note that a force-push that replaces a PR's base history closes the PR on GitHub, and it can't be reopened.
+
+## Releasing
+
+Set up in CLA-2 (2026-11-18).
+
+- `version` in `package.json` is the only source of clare's version. A PR that should ship bumps it itself, following semver while clare is on `0.x`: a minor bump for new behavior, a patch bump for fixes. A PR that doesn't bump it, such as a record-only change, releases nothing.
+- On every push to `main`, `.github/workflows/release.yml` runs the tests, then `scripts/release.js` publishes the version to npm if it isn't there yet, tags the commit `v<version>`, and creates a GitHub release with generated notes. Each step is skipped if it's already done, so rerunning a failed run finishes only what's missing. It refuses a version lower than npm's `latest`. On PRs, the workflow only runs the tests and `npm pack --dry-run`.
+- Nothing commits to `main` on a release.
+- Publishing uses npm trusted publishing, so no npm token exists anywhere. The trusted publisher is set to allow direct `npm publish` from `release.yml`, not npm's default staged publishing, because staging would make every release wait for the owner's 2FA approval.
+- A published version can't be taken back. To roll back, deprecate it (`npm deprecate`) and release a fix.
 
 ## Where the roadmap lives
 
