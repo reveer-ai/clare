@@ -113,7 +113,6 @@ test('the installed skill uses only name and description', (t) => {
   const keys = frontmatter.split('\n').map((line) => line.split(':')[0]);
   assert.deepEqual(keys, ['name', 'description']);
   assert.match(frontmatter, /^name: clare$/m);
-  assert.match(frontmatter, /^description: TBD\..*does nothing\.$/m);
 });
 
 // --- Claude Code link ---

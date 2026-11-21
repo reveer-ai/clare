@@ -16,6 +16,12 @@ You give clare a subject: an idea, a change, a system, a codebase. clare decides
 
 **The agent decides the form.** This is a core tenet. clare relies on the coding assistant's own judgment about each subject. It does not route subjects to formats by rule. The owner's examples of how that judgment might come out (a process as a step-through, a system as an interactive map, a comparison as a side-by-side view, facts to remember as flashcards, an argument as a few slides) are illustrations only. Neither the skills nor this record should turn them into a lookup table.
 
+## What a view is
+
+Each explanation clare generates is a **view**: one self-contained HTML file, with everything it needs inline and nothing fetched, so it opens from disk and keeps working. The agent checks a view before handing it over, and opens it for the user where it can. Views go in `clare/` at the project root (the repository root, or the working directory outside one), one file per subject. clare leaves `.gitignore` alone, so each project decides whether to commit them. (Owner, 2026-11-20, CLA-3.)
+
+The skill that makes a view prompts the agent's judgment rather than instructing it. It gives the agent points to weigh, drawn from the principles below, and sets only the rules that keep a view portable and checkable. It never says how to build a page or which form suits which kind of subject. (CLA-3.)
+
 ## Principles
 
 1. **Choose the form for the subject.** Don't default to one format.
@@ -23,6 +29,8 @@ You give clare a subject: an idea, a change, a system, a codebase. clare decides
 3. **Use as few words as possible.** Every sentence has to earn its place.
 4. **Get the important part in first.** A reader who stops early still leaves with the main point.
 5. **Stay true to the source.** Each view names what it explains, so it can be checked and kept current.
+
+The principles cover everything clare puts in front of the user, not just the views: what the agent says on clare's behalf, such as a question about the subject or the message that hands over a page, is brief and puts the main point first too (owner, 2026-11-20, CLA-3 review).
 
 These are the owner's intent for how clare behaves. clare's skills will turn them into working guidance for the agent. Once a skill does, that skill holds the operative wording and changes are made there. This section stays as the intent the skill is checked against, and it is not copied into or kept in sync with the skill text.
 
@@ -36,5 +44,5 @@ Claude Code reads only `.claude/skills/`, never `.agents/skills/`. So when a pro
 
 ## Scope
 
-- **Now:** `/clare <subject>` (or the assistant's equivalent): explain one thing, now.
+- **Now:** `/clare <subject>` (or the assistant's equivalent): explain one thing, now. It's one skill, named `clare`, until more are added. clare then splits into more specific skills (owner, 2026-11-20, CLA-3 review).
 - **Later:** explain a whole repository, part by part, and keep those views current.
