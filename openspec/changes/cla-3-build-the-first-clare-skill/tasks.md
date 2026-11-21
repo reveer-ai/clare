@@ -2,15 +2,15 @@
 
 ## 1. The skill
 
-- [ ] 1.1 Write `skills/clare-explain/SKILL.md`: frontmatter with only `name` and a description written to be picked (design.md), and a short body in the four parts from design.md (subject, points to weigh, the page's fixed requirements, where it goes). Verify by reading it against `specs/explain`: it asks when the subject isn't clear, never covers the whole session, and has no rule assigning a form, layout or template to a kind of subject. Then check it against the principles in `edda/vision.md`.
-- [ ] 1.2 Delete `skills/clare/` and verify `skills/` holds only `clare-explain/`
-- [ ] 1.3 Add a test that every packaged `SKILL.md` has only `name` and `description` in its frontmatter and that `name` matches its folder, and verify it passes with `npm test`
+- [x] 1.1 Write `skills/clare-explain/SKILL.md`: frontmatter with only `name` and a description written to be picked (design.md), and a short body in the four parts from design.md (subject, points to weigh, the page's fixed requirements, where it goes). Verify by reading it against `specs/explain`: it asks when the subject isn't clear, never covers the whole session, and has no rule assigning a form, layout or template to a kind of subject. Then check it against the principles in `edda/vision.md`.
+- [x] 1.2 Delete `skills/clare/` and verify `skills/` holds only `clare-explain/`
+- [x] 1.3 Add a test that every packaged `SKILL.md` has only `name` and `description` in its frontmatter and that `name` matches its folder, and verify it passes with `npm test`
 
 ## 2. `init` removes retired skills
 
-- [ ] 2.1 Point the existing CLI tests at `clare-explain` instead of `clare`, and verify `npm test` passes
-- [ ] 2.2 Add `retiredSkills = ['clare']` to `bin/clare.js`. Before installing, remove `.agents/skills/<name>/` and a `.claude/skills/<name>` symlink, print `removed <path>` for each, and leave a real folder alone. Verify with `node --test` cases for the three "Remove retired skills" scenarios in `specs/skill-install`, plus "other skills untouched" still passing
-- [ ] 2.3 Verify `npm pack --dry-run` lists `skills/clare-explain/SKILL.md` and no `skills/clare/`
+- [x] 2.1 Point the existing CLI tests at `clare-explain` instead of `clare`, and verify `npm test` passes
+- [x] 2.2 Add `retiredSkills = ['clare']` to `bin/clare.js`. Before installing, remove `.agents/skills/<name>/` and a `.claude/skills/<name>` symlink, print `removed <path>` for each, and leave a real folder alone. Verify with `node --test` cases for the three "Remove retired skills" scenarios in `specs/skill-install`, plus "other skills untouched" still passing
+- [x] 2.3 Verify `npm pack --dry-run` lists `skills/clare-explain/SKILL.md` and no `skills/clare/`
 
 ## 3. Release and docs
 

@@ -6,6 +6,9 @@ import { fileURLToPath } from 'node:url';
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const packagedSkills = path.join(packageRoot, 'skills');
 
+// Skills clare used to ship. init removes them, so an update leaves no dead skill behind.
+const retiredSkills = ['clare'];
+
 const usage = `Usage: clare <command>
 
 Commands:
@@ -25,6 +28,15 @@ function warn(message) {
   process.stderr.write(`warning: ${message}\n`);
 }
 
+function lstatOrNull(file) {
+  try {
+    return fs.lstatSync(file);
+  } catch (error) {
+    if (error.code === 'ENOENT') return null;
+    throw error;
+  }
+}
+
 // Point .claude/skills/<name> at the .agents/skills/<name> copy, so Claude Code
 // finds the same files. Never fails the install: problems become warnings.
 function linkForClaudeCode(cwd, name) {
@@ -36,12 +48,7 @@ function linkForClaudeCode(cwd, name) {
   try {
     fs.mkdirSync(linkDir, { recursive: true });
 
-    let existing = null;
-    try {
-      existing = fs.lstatSync(linkPath);
-    } catch (error) {
-      if (error.code !== 'ENOENT') throw error;
-    }
+    const existing = lstatOrNull(linkPath);
     if (existing && !existing.isSymbolicLink()) {
       warn(`${shown} already exists and isn't a link, so it was left alone. Claude Code won't see clare's ${name} skill.`);
       return;
@@ -60,6 +67,26 @@ function linkForClaudeCode(cwd, name) {
   }
 }
 
+// Remove each retired skill's .agents/skills/ folder and its Claude Code link.
+// A real folder at the link path isn't clare's, so it's left alone.
+function removeRetired(cwd, names) {
+  for (const name of retiredSkills) {
+    if (names.includes(name)) continue;
+
+    const installed = path.join('.agents', 'skills', name);
+    if (lstatOrNull(path.join(cwd, installed))) {
+      fs.rmSync(path.join(cwd, installed), { recursive: true, force: true });
+      console.log(`removed    ${installed}`);
+    }
+
+    const link = path.join('.claude', 'skills', name);
+    if (lstatOrNull(path.join(cwd, link))?.isSymbolicLink()) {
+      fs.unlinkSync(path.join(cwd, link));
+      console.log(`removed    ${link}`);
+    }
+  }
+}
+
 function init(cwd) {
   const skillsDir = path.join(cwd, '.agents', 'skills');
   const names = fs
@@ -68,6 +95,8 @@ function init(cwd) {
     .map((entry) => entry.name)
     .sort();
   const useClaude = fs.existsSync(path.join(cwd, '.claude'));
+
+  removeRetired(cwd, names);
 
   fs.mkdirSync(skillsDir, { recursive: true });
   for (const name of names) {
