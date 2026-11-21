@@ -13,7 +13,7 @@ Everything you say to the user while doing this follows the same points as the p
 
 If the user gave a subject, explain that.
 
-If not, work out the one specific thing they mean from the recent conversation, such as the change you just made or the code you've been discussing. Go ahead only if you're confident. Never explain the whole session.
+If not, work out the one specific thing they mean from the recent conversation, such as the change you just made or the code you've been discussing. Go ahead only if you're confident. When the conversation has covered several things, the latest isn't automatically the one. Never explain the whole session.
 
 If you aren't confident, ask one short question about what to explain, with your best guess if you have one. Write nothing until they answer.
 
