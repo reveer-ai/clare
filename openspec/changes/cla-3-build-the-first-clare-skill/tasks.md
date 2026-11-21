@@ -24,8 +24,8 @@
 
 ## 5. Try it
 
-- [ ] 5.1 In a scratch git project with `0.2.0` installed from the packed tarball, run the skill in Claude Code and in at least one `.agents/skills/` assistant (such as Codex) on: (a) an explicit subject, (b) no argument right after one clear change, (c) no argument in a mixed conversation. Verify (a) and (b) each write `clare/<slug>.html` at the repo root and report the path, and (c) asks before writing anything
-- [ ] 5.2 Open each page from disk with the network off and verify it displays and works fully, and names its subject and sources. Note the results from 5.1 and 5.2 in the PR, including anything that suggests tuning the skill
+- [x] 5.1 In a scratch git project with `0.2.0` installed from the packed tarball, run the skill in Claude Code and in at least one `.agents/skills/` assistant (such as Codex) on: (a) an explicit subject, (b) no argument right after one clear change, (c) no argument in a mixed conversation. Verify (a) and (b) each write `clare/<slug>.html` at the repo root and report the path, and (c) asks before writing anything
+- [x] 5.2 Open each page from disk with the network off and verify it displays and works fully, and names its subject and sources. Note the results from 5.1 and 5.2 in the PR, including anything that suggests tuning the skill
 
 ## Workflow follow-up
 
