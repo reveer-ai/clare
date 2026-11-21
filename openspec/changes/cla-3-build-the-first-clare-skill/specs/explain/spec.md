@@ -2,16 +2,16 @@
 
 ## Purpose
 
-Explains one subject by generating a single self-contained HTML page that gets it across with as little reading as possible.
+Explains one subject by generating a single self-contained HTML page that gets it across as effectively and efficiently as possible.
 
 ## ADDED Requirements
 
 ### Requirement: Explain skill
-The package SHALL ship a skill named `clare-explain` whose `SKILL.md` frontmatter has only the Agent Skills standard fields `name` and `description`. The description SHALL say that it explains a subject as a single visual HTML page and when to use it.
+The package SHALL ship a skill named `clare` whose `SKILL.md` frontmatter has only the Agent Skills standard fields `name` and `description`. The description SHALL say that it gets a subject across as a single visual HTML page, and when to use it.
 
 #### Scenario: Skill metadata
-- **WHEN** the installed `.agents/skills/clare-explain/SKILL.md` is read
-- **THEN** its frontmatter has `name: clare-explain` and a description of what it does and when to use it, with no other fields
+- **WHEN** the installed `.agents/skills/clare/SKILL.md` is read
+- **THEN** its frontmatter has `name: clare` and a description of what it does and when to use it, with no other fields
 
 ### Requirement: Explicit subject
 When the user gives a subject, the skill SHALL explain that subject.
@@ -60,6 +60,18 @@ Each page SHALL show its subject and the sources it drew on, such as file paths 
 - **WHEN** a page explaining code in the project is opened
 - **THEN** it shows the subject and lists the files or commits it was based on
 
+### Requirement: Page checked before hand-over
+Before handing a page over, the agent SHALL check it: its content is true to its sources, it reaches nothing on the network, and it renders with its interactive parts working. If the agent could not check something, it SHALL say so.
+
+#### Scenario: Page checked
+- **WHEN** the agent has written a page
+- **THEN** it checks the page before telling the user it's ready
+
+#### Scenario: Check not possible
+- **GIVEN** the agent has no way to render the page
+- **WHEN** it hands the page over
+- **THEN** it says the page wasn't rendered
+
 ### Requirement: Page location
 The skill SHALL write the page to `clare/<slug>.html` at the project root (the repository root, or the working directory outside a repository), creating `clare/` if needed. `<slug>` SHALL be a short kebab-case name for the subject. The skill SHALL NOT modify `.gitignore`.
 
@@ -78,9 +90,25 @@ The skill SHALL write the page to `clare/<slug>.html` at the project root (the r
 - **WHEN** the skill explains the auth flow again
 - **THEN** that file is replaced and no second file is created for it
 
-### Requirement: Path reported
-After writing a page, the skill SHALL tell the user its path.
+### Requirement: Page opened and path reported
+After writing and checking a page, the agent SHALL open it with the operating system's open command when it can run commands, and SHALL tell the user its path either way.
 
-#### Scenario: Page written
-- **WHEN** the skill finishes writing a page
-- **THEN** the agent tells the user the page's path
+#### Scenario: Agent can run commands
+- **WHEN** the page is ready and the agent can run shell commands
+- **THEN** it opens the page with the OS's open command (`open`, `xdg-open` or `start`) and tells the user the path
+
+#### Scenario: Opening not possible
+- **GIVEN** the agent can't run commands, or the open command fails
+- **WHEN** the page is ready
+- **THEN** the agent tells the user the path
+
+### Requirement: Brief with the user
+What the agent says to the user while using the skill SHALL follow clare's principles: as few words as possible, with the main point first. The final report SHALL NOT restate the page.
+
+#### Scenario: Final report
+- **WHEN** the page is ready
+- **THEN** the agent's message gives the path and at most a line or two more, such as anything it couldn't check
+
+#### Scenario: Asking about the subject
+- **WHEN** the agent needs to ask what to explain
+- **THEN** it asks one short question
