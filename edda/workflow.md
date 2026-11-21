@@ -18,7 +18,7 @@ Stay on the latest OpenSpec release. The repo was set up with 2.1.0, installed g
 |---|---|
 | Proposal | Owner approves. Stop after writing it and opening the PR |
 | Design | Owner approves. Write it only once the proposal is approved and you and the owner are aligned on it. After both exist, update them together as the change is refined |
-| Specs, tasks | No separate approval |
+| Specs, tasks | No separate approval. Write them together, in one pass, once the design is approved (owner, 2026-11-20) |
 | Start of implementation | Owner initiates; never start on your own |
 | Archive | Automatic once the owner approves the PR: archive the change in the same PR, before merge |
 

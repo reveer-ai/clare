@@ -15,6 +15,7 @@ rules:
     - Write the design only after the owner has approved the proposal and you are aligned on it.
     - Once both exist, keep them in step and update both together as the change is refined.
     - The owner approves the design. Specs and tasks need no separate approval.
+    - Once the design is approved, write the specs and the tasks together in one pass. Don't write specs before the design is approved.
 
 operations:
   apply:
