@@ -24,19 +24,19 @@ To update, run the latest version:
 npx clare-ai@latest init
 ```
 
-This replaces clare's skill folders, including any edits you made to them, and removes skills clare no longer ships.
+This replaces clare's skill folders, including any edits you made to them.
 
 ## Use
 
 Ask your assistant to explain something:
 
 ```
-/clare-explain <subject>
+/clare <subject>
 ```
 
 Or ask for clare by name, such as "use clare to explain the auth flow". With no subject, clare explains what you've just been working on if that's clear, and asks if it isn't.
 
-Each explanation is one self-contained HTML file in `clare/` at the project root, such as `clare/auth-flow.html`. It opens from disk, offline. clare doesn't change your `.gitignore`, so you decide whether to commit them.
+Each explanation is one self-contained HTML file in `clare/` at the project root, such as `clare/auth-flow.html`. clare opens it for you when your assistant can run commands. It works from disk, offline. clare doesn't change your `.gitignore`, so you decide whether to commit them.
 
 ## License
 

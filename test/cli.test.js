@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const bin = path.join(root, 'bin', 'clare.js');
-const packagedSkill = path.join(root, 'skills', 'clare-explain');
+const packagedSkill = path.join(root, 'skills', 'clare');
 const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
 
 function scratch(t) {
@@ -69,8 +69,8 @@ test('init in a fresh project installs the packaged skill and reports paths', (t
   const dir = scratch(t);
   const r = clare(dir, 'init');
   assert.equal(r.status, 0, r.stderr);
-  assert.deepEqual(snapshot(path.join(dir, '.agents', 'skills', 'clare-explain')), snapshot(packagedSkill));
-  assert.match(r.stdout, /installed\s+\.agents[/\\]skills[/\\]clare-explain/);
+  assert.deepEqual(snapshot(path.join(dir, '.agents', 'skills', 'clare')), snapshot(packagedSkill));
+  assert.match(r.stdout, /installed\s+\.agents[/\\]skills[/\\]clare/);
   assert.equal(r.stderr, '');
 });
 
@@ -88,13 +88,13 @@ test('init leaves other entries in .agents/skills byte-for-byte unchanged', (t) 
   for (const [file, contents] of Object.entries(before)) assert.equal(after[file], contents, file);
   assert.deepEqual(
     fs.readdirSync(skills).sort(),
-    ['.openspec-target', 'clare-explain', 'openspec-explore'],
+    ['.openspec-target', 'clare', 'openspec-explore'],
   );
 });
 
-test('init replaces a stale or edited clare-explain skill with exactly the packaged files', (t) => {
+test('init replaces a stale or edited clare skill with exactly the packaged files', (t) => {
   const dir = scratch(t);
-  const installed = path.join(dir, '.agents', 'skills', 'clare-explain');
+  const installed = path.join(dir, '.agents', 'skills', 'clare');
   fs.mkdirSync(installed, { recursive: true });
   fs.writeFileSync(path.join(installed, 'SKILL.md'), 'edited\n');
   fs.writeFileSync(path.join(installed, 'extra.md'), 'leftover\n');
@@ -102,37 +102,37 @@ test('init replaces a stale or edited clare-explain skill with exactly the packa
   const r = clare(dir, 'init');
   assert.equal(r.status, 0, r.stderr);
   assert.deepEqual(snapshot(installed), snapshot(packagedSkill));
-  assert.match(r.stdout, /replaced\s+\.agents[/\\]skills[/\\]clare-explain/);
+  assert.match(r.stdout, /replaced\s+\.agents[/\\]skills[/\\]clare/);
 });
 
 test('the installed skill uses only name and description', (t) => {
   const dir = scratch(t);
   clare(dir, 'init');
-  const text = fs.readFileSync(path.join(dir, '.agents', 'skills', 'clare-explain', 'SKILL.md'), 'utf8');
+  const text = fs.readFileSync(path.join(dir, '.agents', 'skills', 'clare', 'SKILL.md'), 'utf8');
   const frontmatter = text.match(/^---\n([\s\S]*?)\n---\n/)[1];
   const keys = frontmatter.split('\n').map((line) => line.split(':')[0]);
   assert.deepEqual(keys, ['name', 'description']);
-  assert.match(frontmatter, /^name: clare-explain$/m);
+  assert.match(frontmatter, /^name: clare$/m);
 });
 
 // --- Claude Code link ---
 
-test('with .claude/, init links .claude/skills/clare-explain to the .agents copy', (t) => {
+test('with .claude/, init links .claude/skills/clare to the .agents copy', (t) => {
   const dir = scratch(t);
   fs.mkdirSync(path.join(dir, '.claude'));
   const r = clare(dir, 'init');
   assert.equal(r.status, 0, r.stderr);
 
-  const link = path.join(dir, '.claude', 'skills', 'clare-explain');
+  const link = path.join(dir, '.claude', 'skills', 'clare');
   assert.ok(fs.lstatSync(link).isSymbolicLink());
   if (process.platform !== 'win32') {
-    assert.equal(fs.readlinkSync(link), path.join('..', '..', '.agents', 'skills', 'clare-explain'));
+    assert.equal(fs.readlinkSync(link), path.join('..', '..', '.agents', 'skills', 'clare'));
   }
   assert.equal(
     fs.readFileSync(path.join(link, 'SKILL.md'), 'utf8'),
     fs.readFileSync(path.join(packagedSkill, 'SKILL.md'), 'utf8'),
   );
-  assert.match(r.stdout, /linked\s+\.claude[/\\]skills[/\\]clare-explain -> \.\.\/\.\.\/\.agents\/skills\/clare-explain/);
+  assert.match(r.stdout, /linked\s+\.claude[/\\]skills[/\\]clare -> \.\.\/\.\.\/\.agents\/skills\/clare/);
 });
 
 test('without .claude/, init creates no .claude folder', (t) => {
@@ -142,34 +142,34 @@ test('without .claude/, init creates no .claude folder', (t) => {
   assert.equal(fs.existsSync(path.join(dir, '.claude')), false);
 });
 
-test('an existing symlink at .claude/skills/clare-explain is replaced', (t) => {
+test('an existing symlink at .claude/skills/clare is replaced', (t) => {
   const dir = scratch(t);
   const linkDir = path.join(dir, '.claude', 'skills');
   fs.mkdirSync(linkDir, { recursive: true });
   fs.mkdirSync(path.join(dir, 'elsewhere'));
-  fs.symlinkSync(path.join(dir, 'elsewhere'), path.join(linkDir, 'clare-explain'), 'junction');
+  fs.symlinkSync(path.join(dir, 'elsewhere'), path.join(linkDir, 'clare'), 'junction');
 
   const r = clare(dir, 'init');
   assert.equal(r.status, 0, r.stderr);
-  const link = path.join(linkDir, 'clare-explain');
+  const link = path.join(linkDir, 'clare');
   assert.ok(fs.lstatSync(link).isSymbolicLink());
-  assert.equal(fs.realpathSync(link), fs.realpathSync(path.join(dir, '.agents', 'skills', 'clare-explain')));
+  assert.equal(fs.realpathSync(link), fs.realpathSync(path.join(dir, '.agents', 'skills', 'clare')));
   if (process.platform !== 'win32') {
-    assert.equal(fs.readlinkSync(link), path.join('..', '..', '.agents', 'skills', 'clare-explain'));
+    assert.equal(fs.readlinkSync(link), path.join('..', '..', '.agents', 'skills', 'clare'));
   }
 });
 
-test('a real folder at .claude/skills/clare-explain is left alone with a warning', (t) => {
+test('a real folder at .claude/skills/clare is left alone with a warning', (t) => {
   const dir = scratch(t);
-  const own = path.join(dir, '.claude', 'skills', 'clare-explain');
+  const own = path.join(dir, '.claude', 'skills', 'clare');
   fs.mkdirSync(own, { recursive: true });
   fs.writeFileSync(path.join(own, 'SKILL.md'), 'mine\n');
 
   const r = clare(dir, 'init');
   assert.equal(r.status, 0);
   assert.deepEqual(snapshot(own), { 'SKILL.md': 'mine\n' });
-  assert.match(r.stderr, /warning: \.claude[/\\]skills[/\\]clare-explain already exists/);
-  assert.deepEqual(snapshot(path.join(dir, '.agents', 'skills', 'clare-explain')), snapshot(packagedSkill));
+  assert.match(r.stderr, /warning: \.claude[/\\]skills[/\\]clare already exists/);
+  assert.deepEqual(snapshot(path.join(dir, '.agents', 'skills', 'clare')), snapshot(packagedSkill));
 });
 
 test('a link that cannot be created warns and keeps the install', { skip: !canTestPermissions && 'needs POSIX permissions as non-root' }, (t) => {
@@ -184,46 +184,7 @@ test('a link that cannot be created warns and keeps the install', { skip: !canTe
     fs.chmodSync(linkDir, 0o755);
   }
   assert.equal(r.status, 0);
-  assert.match(r.stderr, /warning: couldn't link \.claude[/\\]skills[/\\]clare-explain/);
-  assert.equal(fs.existsSync(path.join(linkDir, 'clare-explain')), false);
-  assert.deepEqual(snapshot(path.join(dir, '.agents', 'skills', 'clare-explain')), snapshot(packagedSkill));
-});
-
-// --- retired skills ---
-
-test('updating from 0.1.0 removes the placeholder skill and its link', (t) => {
-  const dir = scratch(t);
-  const old = path.join(dir, '.agents', 'skills', 'clare');
-  fs.mkdirSync(old, { recursive: true });
-  fs.writeFileSync(path.join(old, 'SKILL.md'), '---\nname: clare\n---\nTBD.\n');
-  fs.mkdirSync(path.join(dir, '.claude', 'skills'), { recursive: true });
-  fs.symlinkSync(path.join('..', '..', '.agents', 'skills', 'clare'), path.join(dir, '.claude', 'skills', 'clare'), 'dir');
-
-  const r = clare(dir, 'init');
-  assert.equal(r.status, 0, r.stderr);
-  assert.equal(fs.existsSync(old), false);
-  assert.throws(() => fs.lstatSync(path.join(dir, '.claude', 'skills', 'clare')), { code: 'ENOENT' });
-  assert.match(r.stdout, /removed\s+\.agents[/\\]skills[/\\]clare\n/);
-  assert.match(r.stdout, /removed\s+\.claude[/\\]skills[/\\]clare\n/);
-  assert.deepEqual(snapshot(path.join(dir, '.agents', 'skills', 'clare-explain')), snapshot(packagedSkill));
-});
-
-test('a real folder named like a retired skill in .claude/skills is left alone', (t) => {
-  const dir = scratch(t);
-  const own = path.join(dir, '.claude', 'skills', 'clare');
-  fs.mkdirSync(own, { recursive: true });
-  fs.writeFileSync(path.join(own, 'SKILL.md'), 'mine\n');
-
-  const r = clare(dir, 'init');
-  assert.equal(r.status, 0, r.stderr);
-  assert.deepEqual(snapshot(own), { 'SKILL.md': 'mine\n' });
-  assert.doesNotMatch(r.stdout, /removed/);
-});
-
-test('with no retired skill installed, nothing is reported as removed', (t) => {
-  const dir = scratch(t);
-  fs.mkdirSync(path.join(dir, '.claude'));
-  const r = clare(dir, 'init');
-  assert.equal(r.status, 0, r.stderr);
-  assert.doesNotMatch(r.stdout, /removed/);
+  assert.match(r.stderr, /warning: couldn't link \.claude[/\\]skills[/\\]clare/);
+  assert.equal(fs.existsSync(path.join(linkDir, 'clare')), false);
+  assert.deepEqual(snapshot(path.join(dir, '.agents', 'skills', 'clare')), snapshot(packagedSkill));
 });
