@@ -10,10 +10,9 @@ clare installs, but its only skill is a placeholder that does nothing. This chan
 
 - Add the skill **`clare-explain`**. Its name follows a `clare-` prefix, so later skills can sit beside it as `clare-*`. The user runs it with a subject, as `/clare-explain <subject>` or the assistant's equivalent.
 - **The subject** is whatever the user passes. With no argument, it is the subject the conversation makes obvious, such as the change just made or the code being discussed. If nothing is obvious, the skill asks instead of guessing.
-- **The output is one self-contained HTML file.** It holds everything it needs, so it opens straight from disk with nothing to install or fetch. Inside that one page the agent can use whatever gets the concept across: a diagram, an interactive control, a step-through, a few slides, flashcards. Text is the last resort.
-- **The agent decides the form.** The skill states clare's principles as working guidance for the agent's judgment. It doesn't map kinds of subjects to formats.
-- **Each page names what it explains**: the subject and the sources it drew on, such as files, so a reader can check it.
-- **The file goes in `.clare/` at the project root**, named after the subject (for example `.clare/auth-flow.html`). Explaining the same subject again replaces that file. When it's written, the skill gives the user the path. clare doesn't change `.gitignore`, so each project decides whether to commit its views.
+- **The output is one self-contained HTML file.** It holds everything it needs, so it opens straight from disk with nothing to install or fetch.
+- **The skill prompts, it doesn't instruct.** It gives the agent a few points to weigh when deciding how to present the subject, drawn from clare's principles: show rather than tell, use as few words as possible, put the main point first, name what the page explains so it can be checked. It doesn't tell the agent how to build the page or which form to use for which kind of subject. The agent decides that.
+- **The file goes in `clare/` at the project root**, named after the subject (for example `clare/auth-flow.html`). Explaining the same subject again replaces that file. When it's written, the skill gives the user the path. clare doesn't change `.gitignore`, so each project decides whether to commit its views.
 - **Remove the placeholder skill `clare`.** Projects that installed `0.1.0` have `.agents/skills/clare/`, and possibly a `.claude/skills/clare` link. `clare init` removes those, so an update leaves no dead skill behind.
 - Release as `0.2.0`.
 
@@ -21,7 +20,7 @@ clare installs, but its only skill is a placeholder that does nothing. This chan
 
 ### New Capabilities
 
-- `explain`: how clare explains a subject: choosing the subject, what the generated page must be and contain, and where it's written.
+- `explain`: how clare explains a subject: choosing the subject, what the generated page must be, and where it's written.
 
 ### Modified Capabilities
 

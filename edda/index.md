@@ -5,4 +5,4 @@
 
 ## Open decisions
 
-- **Where a generated view goes on disk.** What it is is decided: a single self-contained HTML file (owner, 2026-11-20). CLA-3's proposal puts it in `.clare/` at the project root, pending the owner's approval.
+- **Where a generated view goes on disk.** What it is is decided: a single self-contained HTML file (owner, 2026-11-20). CLA-3's proposal puts it in `clare/` at the project root, pending the owner's approval.
