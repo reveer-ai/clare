@@ -19,8 +19,8 @@
 
 ## 4. Project record
 
-- [ ] 4.1 Update `edda/vision.md`: the scope's command becomes `/clare-explain <subject>`, and add what a view is on disk (one self-contained HTML file in `clare/` at the project root) and that the skill prompts the agent's judgment instead of prescribing forms. Verify nothing in it restates the skill's wording
-- [ ] 4.2 Remove the open decision from `edda/index.md` and verify the index still describes `vision.md` accurately
+- [x] 4.1 Update `edda/vision.md`: the scope's command becomes `/clare-explain <subject>`, and add what a view is on disk (one self-contained HTML file in `clare/` at the project root) and that the skill prompts the agent's judgment instead of prescribing forms. Verify nothing in it restates the skill's wording
+- [x] 4.2 Remove the open decision from `edda/index.md` and verify the index still describes `vision.md` accurately
 
 ## 5. Try it
 
