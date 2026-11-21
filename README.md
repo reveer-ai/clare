@@ -4,8 +4,6 @@ clare explains a subject in whatever form gets it across fastest: an interactive
 
 It ships as a set of skills that any coding assistant can use.
 
-> **Not usable yet.** The only skill so far is a placeholder that does nothing.
-
 ## Install
 
 In your project:
@@ -26,7 +24,19 @@ To update, run the latest version:
 npx clare-ai@latest init
 ```
 
-This replaces clare's skill folders, including any edits you made to them.
+This replaces clare's skill folders, including any edits you made to them, and removes skills clare no longer ships.
+
+## Use
+
+Ask your assistant to explain something:
+
+```
+/clare-explain <subject>
+```
+
+Or ask for clare by name, such as "use clare to explain the auth flow". With no subject, clare explains what you've just been working on if that's clear, and asks if it isn't.
+
+Each explanation is one self-contained HTML file in `clare/` at the project root, such as `clare/auth-flow.html`. It opens from disk, offline. clare doesn't change your `.gitignore`, so you decide whether to commit them.
 
 ## License
 

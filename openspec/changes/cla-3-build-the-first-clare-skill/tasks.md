@@ -14,8 +14,8 @@
 
 ## 3. Release and docs
 
-- [ ] 3.1 Set `version` to `0.2.0` in `package.json` and verify `node bin/clare.js --version` prints `0.2.0`
-- [ ] 3.2 Update `README.md`: drop "Not usable yet" and add a short Use section (run `/clare-explain <subject>` or ask for clare by name, pages land in `clare/`). Verify it matches the skill's behavior and the install steps still work through `npm pack` and `npx ./clare-ai-0.2.0.tgz init` in a scratch directory
+- [x] 3.1 Set `version` to `0.2.0` in `package.json` and verify `node bin/clare.js --version` prints `0.2.0`
+- [x] 3.2 Update `README.md`: drop "Not usable yet" and add a short Use section (run `/clare-explain <subject>` or ask for clare by name, pages land in `clare/`). Verify it matches the skill's behavior and the install steps still work through `npm pack` and `npx ./clare-ai-0.2.0.tgz init` in a scratch directory
 
 ## 4. Project record
 
